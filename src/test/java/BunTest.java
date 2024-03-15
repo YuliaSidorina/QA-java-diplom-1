@@ -7,38 +7,36 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class BunTest {
 
-    private final String bunName;
-    private final float bunPrice;
+    private static final float DELTA = 0.001f;
 
-    public BunTest(String bunName, float bunPrice) {
-        this.bunName = bunName;
-        this.bunPrice = bunPrice;
+    private final Bun bun;
+    private final String expectedName;
+    private final float expectedPrice;
+
+    public BunTest(Bun bun, String expectedName, float expectedPrice) {
+        this.bun = bun;
+        this.expectedName = expectedName;
+        this.expectedPrice = expectedPrice;
     }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"Sesame", 2.0f},
+                {new Bun("Sesame", 2.0f), "Sesame", 2.0f},
         });
     }
 
     @Test
     public void testBunName() {
-        Bun bunMock = mock(Bun.class);
-        when(bunMock.getName()).thenReturn(bunName);
-        assertEquals(bunName, bunMock.getName());
+        assertEquals(expectedName, bun.getName());
     }
 
     @Test
     public void testBunPrice() {
-        Bun bunMock = mock(Bun.class);
-        when(bunMock.getPrice()).thenReturn(bunPrice);
-        assertEquals(bunPrice, bunMock.getPrice(), 0.001);
+        assertEquals(expectedPrice, bun.getPrice(), DELTA);
     }
 }
