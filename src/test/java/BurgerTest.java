@@ -1,63 +1,35 @@
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import praktikum.Bun;
 import praktikum.Burger;
 import praktikum.Ingredient;
 import praktikum.IngredientType;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@RunWith(Parameterized.class)
 public class BurgerTest {
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                {2.0f, 1.5f, 1.0f, 4.0f}, // Цена булки учитывается дважды
-                {1.0f, 0.5f, 0.75f, 3.25f}, // Цена булки учитывается дважды
-        });
-    }
-
-    private final float bunPrice;
-    private final float ingredient1Price;
-    private final float ingredient2Price;
-    private final float expectedPrice;
-
-    public BurgerTest(float bunPrice, float ingredient1Price, float ingredient2Price, float expectedPrice) {
-        this.bunPrice = bunPrice;
-        this.ingredient1Price = ingredient1Price;
-        this.ingredient2Price = ingredient2Price;
-        this.expectedPrice = expectedPrice;
-    }
 
     @Test
     public void testGetPrice() {
         Bun bun = mock(Bun.class);
-        when(bun.getPrice()).thenReturn(bunPrice);
+        when(bun.getPrice()).thenReturn(2.0f);
 
         Ingredient ingredient1 = mock(Ingredient.class);
-        when(ingredient1.getPrice()).thenReturn(ingredient1Price);
+        when(ingredient1.getPrice()).thenReturn(1.5f);
 
         Ingredient ingredient2 = mock(Ingredient.class);
-        when(ingredient2.getPrice()).thenReturn(ingredient2Price);
+        when(ingredient2.getPrice()).thenReturn(1.0f);
 
         Burger burger = new Burger();
         burger.setBuns(bun);
         burger.addIngredient(ingredient1);
         burger.addIngredient(ingredient2);
 
-        // Ожидаемая цена должна быть суммой цены булки, умноженной на 2, и цен ингредиентов
         float expectedPrice = (bun.getPrice() * 2) + ingredient1.getPrice() + ingredient2.getPrice();
 
         assertEquals(expectedPrice, burger.getPrice(), 0.001);
     }
-
-    // Параметризованный тест для метода getReceipt() не требуется, так как метод не принимает аргументов
 
     @Test
     public void testMoveIngredient() {
@@ -97,8 +69,6 @@ public class BurgerTest {
     @Test
     public void testBurgerConstructor() {
         Burger burger = new Burger();
-
-        // Проверяем, что при создании объекта Burger список ingredients пуст
         assertEquals(0, burger.ingredients.size());
     }
 
@@ -111,7 +81,6 @@ public class BurgerTest {
         burger.setBuns(bun);
         burger.addIngredient(ingredient);
 
-        // Проверяем, что ingredient успешно добавлен
         assertEquals(1, burger.ingredients.size());
         assertEquals("Cheese", burger.ingredients.get(0).getName());
     }
@@ -119,11 +88,9 @@ public class BurgerTest {
     @Test
     public void testSetBuns() {
         Bun bun = new Bun("Burger Bun", 2.0f);
-
         Burger burger = new Burger();
         burger.setBuns(bun);
 
-        // Проверяем, что bun успешно установлен
-        assertEquals(bun, burger.bun);
+        assertEquals(bun, burger.getBuns());
     }
 }

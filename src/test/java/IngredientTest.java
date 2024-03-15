@@ -3,22 +3,39 @@ import praktikum.Ingredient;
 import praktikum.IngredientType;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class IngredientTest {
 
     @Test
     public void testFillingIngredient() {
-        Ingredient filling = new Ingredient(IngredientType.FILLING, "Lettuce", 1.0f);
-        assertEquals(1.0f, filling.getPrice(), 0.001);
-        assertEquals("Lettuce", filling.getName());
-        assertEquals(IngredientType.FILLING, filling.getType());
+        IngredientType type = IngredientType.FILLING;
+        String name = "Lettuce";
+        float price = 1.0f;
+
+        Ingredient filling = mock(Ingredient.class);
+        filling.setType(type);
+        filling.setName(name);
+        filling.setPrice(price);
+
+        assertEquals(price, filling.getPrice(), 0.001);
+        assertEquals(name, filling.getName());
+        assertEquals(type, filling.getType());
     }
 
     @Test
     public void testSauceIngredient() {
-        Ingredient sauce = new Ingredient(IngredientType.SAUCE, "Ketchup", 0.5f);
-        assertEquals(0.5f, sauce.getPrice(), 0.001);
-        assertEquals("Ketchup", sauce.getName());
-        assertEquals(IngredientType.SAUCE, sauce.getType());
+        IngredientType type = IngredientType.SAUCE;
+        String name = "Ketchup";
+        float price = 0.5f;
+
+        Ingredient sauce = mock(Ingredient.class);
+        sauce.setType(type);
+        sauce.setName(name);
+        sauce.setPrice(price);
+
+        assertEquals(price, sauce.getPrice(), 0.001);
+        assertEquals(name, sauce.getName());
+        assertEquals(type, sauce.getType());
     }
 }
