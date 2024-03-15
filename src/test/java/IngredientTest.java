@@ -1,41 +1,41 @@
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import praktikum.Ingredient;
 import praktikum.IngredientType;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import java.util.Arrays;
+import java.util.Collection;
 
+import static org.junit.Assert.assertEquals;
+
+@RunWith(Parameterized.class)
 public class IngredientTest {
 
-    @Test
-    public void testFillingIngredient() {
-        IngredientType type = IngredientType.FILLING;
-        String name = "Lettuce";
-        float price = 1.0f;
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                {IngredientType.FILLING, "Lettuce", 1.0f},
+                {IngredientType.SAUCE, "Ketchup", 0.5f}
+        });
+    }
 
-        Ingredient filling = mock(Ingredient.class);
-        filling.setType(type);
-        filling.setName(name);
-        filling.setPrice(price);
+    private final IngredientType type;
+    private final String name;
+    private final float price;
 
-        assertEquals(price, filling.getPrice(), 0.001);
-        assertEquals(name, filling.getName());
-        assertEquals(type, filling.getType());
+    public IngredientTest(IngredientType type, String name, float price) {
+        this.type = type;
+        this.name = name;
+        this.price = price;
     }
 
     @Test
-    public void testSauceIngredient() {
-        IngredientType type = IngredientType.SAUCE;
-        String name = "Ketchup";
-        float price = 0.5f;
+    public void testIngredient() {
+        Ingredient ingredient = new Ingredient(type, name, price);
 
-        Ingredient sauce = mock(Ingredient.class);
-        sauce.setType(type);
-        sauce.setName(name);
-        sauce.setPrice(price);
-
-        assertEquals(price, sauce.getPrice(), 0.001);
-        assertEquals(name, sauce.getName());
-        assertEquals(type, sauce.getType());
+        assertEquals(price, ingredient.getPrice(), 0.001);
+        assertEquals(name, ingredient.getName());
+        assertEquals(type, ingredient.getType());
     }
 }
