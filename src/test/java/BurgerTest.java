@@ -2,7 +2,6 @@ import org.junit.Test;
 import praktikum.Bun;
 import praktikum.Burger;
 import praktikum.Ingredient;
-import praktikum.IngredientType;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -33,16 +32,19 @@ public class BurgerTest {
 
     @Test
     public void testMoveIngredient() {
-        Bun bun = new Bun("Burger Bun", 2.0f);
-        Ingredient ingredient1 = new Ingredient(IngredientType.FILLING, "Cheese", 1.0f);
-        Ingredient ingredient2 = new Ingredient(IngredientType.SAUCE, "Ketchup", 0.5f);
-        Ingredient ingredient3 = new Ingredient(IngredientType.FILLING, "Lettuce", 0.7f);
+        Bun bun = mock(Bun.class);
+        when(bun.getPrice()).thenReturn(2.0f);
+
+        Ingredient ingredient1 = mock(Ingredient.class);
+        when(ingredient1.getPrice()).thenReturn(1.5f);
+
+        Ingredient ingredient2 = mock(Ingredient.class);
+        when(ingredient2.getPrice()).thenReturn(1.0f);
 
         Burger burger = new Burger();
         burger.setBuns(bun);
         burger.addIngredient(ingredient1);
         burger.addIngredient(ingredient2);
-        burger.addIngredient(ingredient3);
 
         burger.moveIngredient(1, 2);
 
@@ -51,9 +53,14 @@ public class BurgerTest {
 
     @Test
     public void testRemoveIngredient() {
-        Bun bun = new Bun("Burger Bun", 2.0f);
-        Ingredient ingredient1 = new Ingredient(IngredientType.FILLING, "Cheese", 1.0f);
-        Ingredient ingredient2 = new Ingredient(IngredientType.SAUCE, "Ketchup", 0.5f);
+        Bun bun = mock(Bun.class);
+        when(bun.getPrice()).thenReturn(2.0f);
+
+        Ingredient ingredient1 = mock(Ingredient.class);
+        when(ingredient1.getPrice()).thenReturn(1.5f);
+
+        Ingredient ingredient2 = mock(Ingredient.class);
+        when(ingredient2.getPrice()).thenReturn(1.0f);
 
         Burger burger = new Burger();
         burger.setBuns(bun);
@@ -74,12 +81,15 @@ public class BurgerTest {
 
     @Test
     public void testAddIngredient() {
-        Bun bun = new Bun("Burger Bun", 2.0f);
-        Ingredient ingredient = new Ingredient(IngredientType.FILLING, "Cheese", 1.0f);
+        Bun bun = mock(Bun.class);
+        when(bun.getPrice()).thenReturn(2.0f);
+
+        Ingredient ingredient1 = mock(Ingredient.class);
+        when(ingredient1.getPrice()).thenReturn(1.5f);
 
         Burger burger = new Burger();
         burger.setBuns(bun);
-        burger.addIngredient(ingredient);
+        burger.addIngredient(ingredient1);
 
         assertEquals(1, burger.ingredients.size());
         assertEquals("Cheese", burger.ingredients.get(0).getName());
@@ -87,7 +97,9 @@ public class BurgerTest {
 
     @Test
     public void testSetBuns() {
-        Bun bun = new Bun("Burger Bun", 2.0f);
+        Bun bun = mock(Bun.class);
+        when(bun.getPrice()).thenReturn(2.0f);
+
         Burger burger = new Burger();
         burger.setBuns(bun);
 
